@@ -8,8 +8,8 @@ function onPress() {
 
 export default function TelaBoasVindas() {
   return (
-    <View style={estilo.container}>
-        <Text style={estilo.mensagem}>Bem-vindo ao app!</Text>
+    <View style={styles.container}>
+        <Text style={styles.mensagem}>Bem-vindo ao app!</Text>
         <Button
             onPress={onPress}
             title="Entrar"
@@ -21,7 +21,7 @@ export default function TelaBoasVindas() {
   );
 }
 
-const estilo = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
