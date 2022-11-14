@@ -2,16 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar, Button } from 'react-native';
 
 
-function onPress() {
-    console.log("clicou");
-}
-
-export default function TelaBoasVindas() {
+export default function TelaBoasVindas({ navigation }) {
   return (
     <View style={styles.container}>
         <Text style={styles.mensagem}>Bem-vindo ao app!</Text>
         <Button
-            onPress={onPress}
+            onPress={() => {
+              navigation.navigate('Listagem');
+            }}
             title="Entrar"
             color="#841584"
             accessibilityLabel="Entrar para valer na aplicação"
@@ -27,9 +25,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#CBBFBB',
   },
   mensagem: {
     fontSize: 44,
-    paddingVertical: 20,
   },
 });

@@ -1,57 +1,82 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, TextInput, Button, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, TextInput,
+   Button, View, Alert } from 'react-native';
+
+import { inserirContato } from '../../services/ContatoService';  
 
 
-export default function TelaCadastro() {
-  const [text, onChangeText] = useState(null);
-  const [number, onChangeNumber] = useState(null);
+export default function TelaCadastro({ navigation }) {
+  const [nome, onChangeNome] = useState("");
+  const [nomeCompleto, onChangeNomeCompleto] = useState(null);
+  const [telefone, onChangeTelefone] = useState(null);
+  const [email, onChangeEmail] = useState(null);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.painel}>
       <Text style={styles.titulo}>Nome contato</Text>
-      <Text>Nome:</Text>
+
+      <Text>Nome</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeText}
+        onChangeText={onChangeNome}
         placeholder="informe o nome"
-        value={text}
-      />
-      <Text>Telefone:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="informe o telefone"
-        keyboardType="numeric"
+        value={nome}
       />
 
-      <Text>e-mail:</Text>
+      <Text>Nome Completo</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="informe o email"
-        keyboardType="e-mail"
+        onChangeText={onChangeNomeCompleto}
+        placeholder="informe o nome completo"
+        value={nomeCompleto}
+      />
+
+      <Text>Telefone</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeTelefone}
+        value={telefone}
+        placeholder="informe o telefone"
+        keyboardType="tel"
+      />
+
+      <Text>e-mail</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeEmail}
+        value={email}
+        placeholder="informe o e-mail"
+        keyboardType="email"
       />
 
 
       <View style={styles.painelBotoes}>
         <Button
           onPress={() => {
-            console.log('salvar o contato')
+            const novoContato = {
+              nome: nome,
+              nomeCompleto: nomeCompleto,
+              telefone: telefone,
+              email: email,
+            };
+            if(nome.length === 0 ) {
+              Alert.alert("Erro", "O nome do contato é uma informação obrigatória!");
+              return;
+            }
+            inserirContato({ novoContato });
+            navigation.navigate('Listagem');
           }}
           title="Salvar"
-          color="#841584"
+          color="#080357"
           style={styles.botao}
         />
 
         <Button
           onPress={() => {
-            console.log('cancelar o cadastro')
+            navigation.goBack();
           }}
           title="Cancelar"
-          color="#841584"
-          style={styles.botao}
+          color="#080357"
         />
 
       </View>
@@ -60,6 +85,10 @@ export default function TelaCadastro() {
 }
 
 const styles = StyleSheet.create({
+  painel: {
+    paddingHorizontal: 8,
+    backgroundColor: '#CBBFBB',
+  },
   input: {
     height: 40,
     margin: 12,
@@ -67,16 +96,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   titulo: {
-    fontSize: 32,
+    fontSize: 22,
+    marginTop: 6,
+    marginBottom: 10,
   },
   painelBotoes: {
     flexDirection: 'row',
     width: '100%',
-    paddingHorizontal: 10,
+    marginTop: 10,
+    paddingHorizontal: 12,
+    justifyContent: 'space-between',
   },
-  botao: {
-    marginHorizontal: 10,
-    marginVertical: 5,
-    padding: 11,
-  }
 });
